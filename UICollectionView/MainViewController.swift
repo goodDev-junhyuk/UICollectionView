@@ -12,19 +12,31 @@ private let reuseIdentifier = "Cell"
 
 class MainViewController: UICollectionViewController {
     
-    private let cellInfo: Array<ColorCellInfo> = ColorCellInfo.GenerateRainbow()
+    private let cellInfos: Array<ColorCellInfo> = ColorCellInfo.GenerateRainbow()
     private var selectedIndex: IndexPath!
+    
+    private struct Storyboard {
+        
+        static let cellIdentifier = "ColorCell"
+        static let segueIdentifier = "Spread"
+        
+    }
+    
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
+        
+        let cellWidth = view.bounds.width - 20
+        
+        if let layout = collectionViewLayout as? UICollectionViewFlowLayout {
+            
+            layout.itemSize = CGSize(width: cellWidth, height: 100)
+        }
 
         // Register cell classes
         self.collectionView!.register(UICollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
 
-        // Do any additional setup after loading the view.
     }
 
     /*
@@ -41,13 +53,13 @@ class MainViewController: UICollectionViewController {
 
     override func numberOfSections(in collectionView: UICollectionView) -> Int {
         // #warning Incomplete implementation, return the number of sections
-        return 0
+        return 1
     }
 
 
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of items
-        return 0
+        return cellInfos.count
     }
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
